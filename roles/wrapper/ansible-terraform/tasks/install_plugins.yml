@@ -1,0 +1,18 @@
+---
+
+- name: Get terraform ansible provider thirdparty plugin
+  get_url:
+    url: "{{ terraform_ansible_plugin_url }}"
+    dest: "{{ terraform_home_dir }}"
+
+- name: Create plugins dir
+  file:
+    path: "{{ terraform_plugins_dir }}"
+    state: directory
+
+- name: Unzip plugin
+  unarchive:
+    remote_src: yes
+    src: "{{ terraform_home_dir }}/terraform-provider-ansible-linux_amd64.zip"
+    dest: "{{ terraform_plugins_dir }}"
+  become: true
